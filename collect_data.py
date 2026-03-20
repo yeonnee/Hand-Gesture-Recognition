@@ -81,14 +81,14 @@ for i in range(len(gesture)):
 
         if result.multi_hand_landmarks is not None:
             for idx in range(len(result.multi_handedness)):
-                joint = np.zeros((21,4))
+                joint = np.zeros((21,3))
                 for j, lm in enumerate(result.multi_hand_landmarks[idx].landmark):
-                    joint[j] = [lm.x, lm.y, lm.z, lm.visibility]
+                    joint[j] = [lm.x, lm.y, lm.z]
 
                 # Compute angles between joints
                 v1 = joint[[0,1,2,3,0,5,6,7,0,9,10,11,0,13,14,15,0,17,18,19],:]    # Parent joint
                 v2 = joint[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],:] # Child joint
-                v = v2 - v1 # [20,4]
+                v = v2 - v1 # [20,3]
 
                 # Normalize v
                 v = v / np.linalg.norm(v, axis=1)[:, np.newaxis]
@@ -133,7 +133,6 @@ for i in range(len(gesture)):
         
         if stamp_time > 20:
             np.savetxt(folder_path2 + '/' + name + '_' + gesture[key] + '.csv', init_array[1:-20,:], delimiter=',', fmt='%s')
-            # np.savetxt('./test_24.csv', init_array[1:-20,:], delimiter=',', fmt='%s')
             break 
 
     cv2.destroyAllWindows()
