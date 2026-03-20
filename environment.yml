@@ -1,0 +1,15 @@
+name: HGR
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - opencv
+  - ipykernel
+  - pytorch
+  - pytorch-cuda=12.1
+  - torchvision
+  - torchaudio
+  - pandas
+  - pip
+  - pip:
+      - mediapipe==0.10.21
