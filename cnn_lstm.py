@@ -30,14 +30,14 @@ class CNN_LSTM(nn.Module):
 
     def forward(self, x):
         """
-        x.shape = (B,seq_len,feature) = (64,30,99)
-        feature 구성 : 21(joint 수)*4(좌표(x,y,z)+visibiliy) + 15(angle)
+        x.shape = (B,seq_len,feature) = (64,30,78)
+        feature 구성 : 21(joint 수)*3(x,y,z 좌표) + 15(angle)
         """
-        x = x.permute(0,2,1)        # (64,99,30)
+        x = x.permute(0,2,1)        # (64,78,30)
         x = self.cnn(x)             # (64,64,28)
         x = self.Relu(x)            # (64,64,28)
         x = x.permute(0, 2, 1)      # (64,28,64)
         h_n, _ = self.lstm(x)       # (64,28,32)
-        x = self.fc(h_n[:, -1, :])  
+        x = self.fc(h_n[:, -1, :])  # (64,32)
         x = self.softmax(x)         # (64,num_classes)
         return x
