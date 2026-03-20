@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np
 import torch
 import random
-from cnn_lstm import CNN_LSTM
+from model.cnn_lstm import CNN_LSTM
 
 
 # MediaPipe hands model
